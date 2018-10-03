@@ -4,13 +4,16 @@ const morgan = require('morgan');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const app = express();
-const apiKey = dotenv.config().parsed.API_KEY;
+const config = dotenv.config().parsed;
+const apiKey = config.API_KEY;
+const platform = config.PLATFORM;
 
-const whiteList = {
+const whiteList = platform === 'development' ? {
   'http://localhost:3000': true,
   'http://localhost:3002': true,
   'undefined': true,
-}
+} : {};
+
 const corsOptions = {
   origin: function (origin, callback) {
     console.log(origin);
